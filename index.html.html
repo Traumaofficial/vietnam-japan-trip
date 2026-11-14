@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trip planner: Vietnam and Japan, 2028</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--hb:#0f4c81;--hb2:#1b86c7;--bg:#f2f5fa;--card:#fff;--ink:#0b2447;--mute:#5a6b85;--line:#e0e7f1;--br:#0f4c81;--br2:#1b86c7;--soft:#e8f1fa;--ok:#157a55;--no:#b4322f;--sk1:#d4e8f6;--sk2:#f6ebe0;--h1:#6ba596;--h2:#3f7f78;--jp:#c9605a;--sun:#f1b05a;--dot:#c9d6e6;--sh:0 1px 2px rgba(11,36,71,.06),0 10px 28px rgba(11,36,71,.07);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08111f;--card:#101c31;--ink:#e9f0fb;--mute:#9db0cb;--line:#22324d;--br:#4aa3df;--br2:#2f86c4;--soft:#14283f;--ok:#4cc798;--no:#f08582;--sk1:#16294a;--sk2:#2c2840;--h1:#2f6a62;--h2:#245650;--jp:#d9766f;--sun:#e8a64f;--dot:#26374f;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#08111f;--card:#101c31;--ink:#e9f0fb;--mute:#9db0cb;--line:#22324d;--br:#4aa3df;--br2:#2f86c4;--soft:#14283f;--ok:#4cc798;--no:#f08582;--sk1:#16294a;--sk2:#2c2840;--h1:#2f6a62;--h2:#245650;--jp:#d9766f;--sun:#e8a64f;--dot:#26374f;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.bar{background:linear-gradient(120deg,color-mix(in srgb,var(--hb) 45%,#06142a),var(--hb) 65%,var(--hb2));color:#fff;transition:background .6s}
+.bw{max-width:1040px;margin:0 auto;padding:14px 18px 0}
+.tp{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.lg{display:flex;align-items:center;gap:12px}
+.mk{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.16);display:grid;place-items:center;animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.lg b{display:block;font-size:1.15rem;line-height:1.2}.lg small{opacity:.75}
+.st{font-size:.8rem;display:flex;align-items:center;gap:7px;opacity:.9}
+.st:before{content:"";width:8px;height:8px;border-radius:50%;background:#9db0cb}.st.ok:before{background:#5ee0a8;box-shadow:0 0 0 4px rgba(94,224,168,.25)}.st.bad:before{background:#ff9d9a}
+nav{display:flex;gap:2px;overflow-x:auto;margin-top:12px;scrollbar-width:none}
+nav a{position:relative;display:flex;align-items:center;gap:7px;padding:11px 14px;color:#cfe0f3;text-decoration:none;font-weight:500;white-space:nowrap;transition:color .2s,background .2s;border-radius:10px 10px 0 0}
+nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+nav a.on{color:var(--ink);background:var(--bg)}
+nav a.dot:after{content:"";position:absolute;top:8px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff6b6b;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{transform:scale(1.5);opacity:.6}}
+main{max-width:1040px;margin:0 auto;padding:20px 18px 70px}
+h1,h2,h3{margin:0;letter-spacing:-.01em}h2{font-size:1.2rem}h3{font-size:1rem}
+.ic{flex:none;vertical-align:middle}
+.page{display:none}.page.on{display:block}
+.page.on>*{animation:up .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.card{background:var(--card);border-radius:16px;box-shadow:var(--sh);padding:20px;margin-bottom:16px}
+.hd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.ttl{display:flex;align-items:center;gap:12px;margin-bottom:14px}.ttl .bd{width:44px;height:44px;border-radius:14px;background:var(--soft);color:var(--br);display:grid;place-items:center}
+.two{display:grid;grid-template-columns:1fr 1.4fr;gap:16px}.two>.card{margin:0}
+.gr2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.gr2>.card{margin:0}
+@media (max-width:760px){.two,.gr2{grid-template-columns:1fr}}
+.scene{width:100%;height:auto;display:block;border-radius:18px;margin-bottom:16px;box-shadow:var(--sh)}
+.cl{animation:cloud 40s linear infinite}.cl2{animation-duration:62s;animation-delay:-20s}
+@keyframes cloud{from{transform:translateX(-160px)}to{transform:translateX(900px)}}
+.sun{animation:sun 6s ease-in-out infinite;transform-origin:660px 50px}@keyframes sun{50%{transform:scale(1.12)}}
+.cd{font-size:1.7rem;font-weight:700;color:var(--br)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:16px 0}
+.tile{display:block;text-decoration:none;color:inherit;background:var(--card);border-radius:16px;box-shadow:var(--sh);padding:16px;transition:transform .25s}
+.tile:hover{transform:translateY(-4px)}.tile b{display:block;font-size:1.4rem;margin:2px 0}.tile span{color:var(--mute);font-size:.85rem}
+.mini{height:6px;background:var(--soft);border-radius:4px;margin-top:8px;overflow:hidden}.mini i{display:block;height:100%;background:var(--br);border-radius:4px;transition:width 1s}
+.pulse{display:grid;gap:10px}.pl2{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}.pl2:first-child{border:0;padding-top:0}
+.tr{flex:none;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:999px}.tr.up{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}.tr.down{background:color-mix(in srgb,var(--no) 14%,transparent);color:var(--no)}
+.pl2 p{margin:0;color:var(--mute);font-size:.9rem}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.cp{border:1px solid var(--line);background:var(--card);padding:6px 13px;border-radius:999px;font-size:.85rem;cursor:pointer;color:var(--ink);transition:all .2s}.cp.on{background:var(--br);border-color:var(--br);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cp.on,:root:not([data-theme="light"]) .pri{color:#06182a}}
+.nw{padding:14px 0;border-top:1px solid var(--line);animation:up .5s both}.nw:first-child{border:0;padding-top:2px}
+.nw .m{display:flex;gap:8px;align-items:center;font-size:.78rem;color:var(--mute);margin-bottom:4px}
+.tg{padding:2px 9px;border-radius:999px;font-weight:600;background:var(--soft);color:var(--br)}.t-Brazil{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}.t-Japan{background:color-mix(in srgb,var(--jp) 16%,transparent);color:var(--jp)}
+.nw p{margin:3px 0 6px;color:var(--mute);font-size:.92rem}.nw a{color:var(--br);font-weight:500;text-decoration:none;font-size:.85rem}.nw a:hover{text-decoration:underline}
+.note{color:var(--mute);font-size:.8rem;margin-top:8px}
+.map{position:relative;border-radius:14px;background:linear-gradient(180deg,var(--soft),var(--card));overflow:hidden}.map svg{display:block;width:100%;height:auto}
+.dots{fill:none;stroke:var(--dot);stroke-width:3.4;stroke-linecap:round}
+.arc{fill:none;stroke:var(--br2);stroke-width:1.6;stroke-dasharray:5 6;animation:dash 2s linear infinite}@keyframes dash{to{stroke-dashoffset:-22}}
+.pn{fill:var(--br)}.pr{fill:none;stroke:var(--br);transform-box:fill-box;transform-origin:center;animation:ping 2.2s ease-out infinite}@keyframes ping{from{transform:scale(1);opacity:.8}to{transform:scale(3.2);opacity:0}}
+.lb{font:600 11px Inter,sans-serif;fill:var(--ink)}.sel .pn{fill:var(--jp)}.sel .pr{stroke:var(--jp)}.home .pn{fill:var(--card);stroke:var(--br);stroke-width:2}
+.fund{color:#fff;border-radius:20px;padding:22px;margin-bottom:16px;background:radial-gradient(circle at 85% 0,rgba(255,255,255,.2),transparent 45%),linear-gradient(130deg,color-mix(in srgb,var(--hb) 45%,#06142a),var(--hb) 55%,var(--hb2));box-shadow:var(--sh);position:relative;overflow:hidden}
+.fund:after{content:"";position:absolute;right:-60px;bottom:-80px;width:220px;height:220px;border-radius:50%;border:34px solid rgba(255,255,255,.07)}
+.fh{display:flex;justify-content:space-between;align-items:center;opacity:.85}.chp{width:38px;height:28px;border-radius:6px;background:linear-gradient(135deg,#f3d58a,#c9a24d)}
+.fa{font-size:clamp(2rem,7vw,3rem);font-weight:700;margin:14px 0 2px}.fs{opacity:.8}.ff{display:flex;justify-content:space-between;align-items:flex-end;margin-top:14px;letter-spacing:.06em;font-size:.85rem}
+.ring{width:72px;height:72px}.rb{fill:none;stroke:rgba(255,255,255,.2);stroke-width:7}.rf{fill:none;stroke:#fff;stroke-width:7;stroke-linecap:round;stroke-dasharray:214;stroke-dashoffset:214;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)}.rt{fill:#fff;font:700 15px Inter,sans-serif;text-anchor:middle}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.k b{display:block;font-size:1.4rem}.k span{font-size:.82rem;color:var(--mute)}
+.goalin{width:100%;font:700 1.4rem Inter,sans-serif;color:var(--ink);background:transparent;border:0;border-bottom:1px dashed var(--line);padding:0}
+.track{position:relative;height:12px;border-radius:7px;background:var(--soft);margin:34px 0 6px}
+.fill{height:100%;width:0;border-radius:7px;background:repeating-linear-gradient(115deg,var(--br) 0 12px,var(--br2) 12px 24px);background-size:34px 100%;animation:stripe 1.2s linear infinite;transition:width 1s cubic-bezier(.2,.8,.2,1)}@keyframes stripe{to{background-position:34px 0}}
+.plc{position:absolute;top:-28px;left:0;transition:left 1s cubic-bezier(.2,.8,.2,1);color:var(--br);transform:translateX(-50%) rotate(-12deg);animation:fl 2.6s ease-in-out infinite}@keyframes fl{50%{margin-top:-5px}}
+.scale{display:flex;justify-content:space-between;font-size:.78rem;color:var(--mute)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+input,button{font:inherit;color:var(--ink)}
+input[type=number],input[type=text],input[type=date]{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:0}
+input[type=number]{width:140px}#note,#pn,#msg,#q{flex:1;min-width:130px}
+button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:9px 14px;background:var(--card);transition:transform .15s,background .2s}
+button:hover{background:var(--soft);transform:translateY(-1px)}button:active{transform:scale(.96)}
+.pri{background:var(--br);border-color:var(--br);color:#fff;font-weight:600}.pri:hover{background:var(--br2)}
+button:focus-visible,input:focus-visible,nav a:focus-visible,.tile:focus-visible,[contenteditable]:focus-visible{outline:2px solid var(--br);outline-offset:2px}
+.log{list-style:none;margin:6px 0 0;padding:0;max-height:240px;overflow:auto}.log li{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-top:1px solid var(--line);animation:up .4s}.log small,.hint,.empty{color:var(--mute)}.hint{font-size:.85rem;margin:10px 0 0}
+.pos{color:var(--ok);font-weight:600}.neg{color:var(--no);font-weight:600}.x{border:0;background:none;padding:0 6px;color:var(--mute)}
+.bars{display:flex;align-items:flex-end;gap:10px;height:130px;padding-top:8px}.bars div{flex:1;text-align:center;font-size:.75rem;color:var(--mute);display:flex;flex-direction:column;justify-content:flex-end;height:100%}.bars i{display:block;background:linear-gradient(var(--br2),var(--br));border-radius:8px 8px 3px 3px;transform-origin:bottom;animation:gro .9s cubic-bezier(.2,.8,.2,1) both;margin-bottom:4px;min-height:3px}@keyframes gro{from{transform:scaleY(0)}}
+.bg{display:grid;grid-template-columns:1fr 130px;gap:8px 12px;align-items:center}.bg input{width:100%}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.pc{background:var(--card);border-radius:16px;box-shadow:var(--sh);overflow:hidden;animation:up .5s both;animation-delay:calc(var(--i,0)*80ms);transition:transform .3s;position:relative}.pc:hover{transform:translateY(-5px)}
+.art{background:linear-gradient(var(--sk1),var(--sk2));height:130px}.art svg{width:100%;height:100%;display:block}
+.pc img{width:100%;height:130px;object-fit:cover;display:block}
+.pc .b{padding:12px 14px 14px}.pc .nm{font-weight:700;font-size:1.05rem;display:block}.pc .co{color:var(--mute);font-size:.82rem}
+.pc .x{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.85);color:#0b2447;border-radius:50%;width:26px;height:26px;display:grid;place-items:center;padding:0}
+.pc .row{margin-top:10px}.sm{padding:5px 10px;font-size:.82rem}
+.sr{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--line)}.sr .art{width:70px;height:46px;border-radius:8px;overflow:hidden;flex:none}.sr .nm{flex:1;font-weight:600}
+.bp{display:flex;border-radius:14px;overflow:hidden;margin-top:10px;background:var(--card);box-shadow:var(--sh);animation:up .5s both;animation-delay:calc(var(--i,0)*80ms);cursor:pointer;transition:transform .25s;text-align:left;width:100%;padding:0;border:0}
+.bp:hover{transform:translateX(4px)}.bp .l{padding:14px 16px;flex:1;display:flex;gap:12px;align-items:center}.bp .l b{display:block;font-size:1.05rem}.bp .l span{color:var(--mute);font-size:.85rem}
+.bp .r{width:116px;display:grid;place-items:center;border-left:2px dashed var(--line);font-weight:700;font-size:.8rem;letter-spacing:.04em}
+.bp.no .r{color:var(--no)}.bp.yes .r{color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent);animation:stamp .5s}@keyframes stamp{from{transform:scale(1.8) rotate(-10deg);opacity:0}}
+.rules{margin:0;padding:0;list-style:none;counter-reset:r}.rules li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line);counter-increment:r}
+.rules li:before{content:counter(r);flex:none;width:26px;height:26px;border-radius:50%;background:var(--soft);color:var(--br);font-weight:700;font-size:.8rem;display:grid;place-items:center}.rules span[contenteditable]{flex:1}
+.chat{display:flex;flex-direction:column;height:min(66vh,560px);padding:0;overflow:hidden}.ch{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.who{display:flex;gap:6px;align-items:center}.who .cp{padding:5px 12px}
+.msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:6px;padding:16px 18px;background:linear-gradient(var(--card),var(--soft))}
+.mr{display:flex;gap:8px;align-items:flex-end;max-width:84%;animation:pop .35s}.mr.me{align-self:flex-end;flex-direction:row-reverse}@keyframes pop{from{opacity:0;transform:scale(.9) translateY(8px)}}
+.av{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:700;background:var(--br);color:#fff}.av.Linh{background:#14917d}
+.bb{padding:9px 13px;border-radius:16px 16px 16px 4px;background:var(--card);box-shadow:0 1px 2px rgba(11,36,71,.1);word-wrap:break-word}.me .bb{background:var(--br);color:#fff;border-radius:16px 16px 4px 16px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .me .bb,:root:not([data-theme="light"]) .av{color:#06182a}}
+.bb small{display:block;opacity:.65;font-size:.7rem;margin-top:2px}
+.cf{padding:12px 16px;border-top:1px solid var(--line)}.cf .row{margin-top:8px}
+.pfb{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:999px;padding:4px 14px 4px 4px;font-weight:500}.pfb:hover{background:rgba(255,255,255,.24)}.pfb .av{border:2px solid rgba(255,255,255,.75)}
+.md{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(6,20,42,.62);backdrop-filter:blur(6px);animation:fade .3s}.md[hidden]{display:none}@keyframes fade{from{opacity:0}}
+.mc{max-width:460px;width:100%;margin:0;animation:up .4s}.pk{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.pk button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 10px;border-radius:14px;font-weight:600}
+.pcd{border-top:5px solid var(--pc)}.ai{display:flex;gap:10px;align-items:center}.stt{display:flex;gap:18px;margin:12px 0 0;flex-wrap:wrap}.stt b{display:block;font-size:1.1rem}.stt span{color:var(--mute);font-size:.8rem}
+.sw{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}.sw button{width:34px;height:34px;border-radius:50%;padding:0;border:3px solid var(--card);box-shadow:0 0 0 2px var(--line)}.sw button.on{box-shadow:0 0 0 3px var(--ink)}
+.fld{display:grid;gap:4px;margin-top:12px;font-size:.85rem;color:var(--mute)}.fld input{width:100%;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="bw">
+<div class="tp"><div class="lg"><div class="mk" data-ic="plane"></div><div><b>Vietnam and Japan, 2028</b><small>Calebe and Linh’s trip planner</small></div></div><div style="display:flex;align-items:center;gap:12px"><div class="st" id="st" role="status">Loading…</div><button class="pfb" id="pfb" aria-label="Switch or edit profile"></button></div></div>
+<nav id="nav" aria-label="Pages"><a href="#home" data-p="home" data-ic="home">Home</a><a href="#money" data-p="money" data-ic="wallet">Savings</a><a href="#places" data-p="places" data-ic="pin">Places</a><a href="#tickets" data-p="tickets" data-ic="ticket">Tickets</a><a href="#rules" data-p="rules" data-ic="shield">Rules</a><a href="#chat" data-p="chat" data-ic="chat">Chat</a><a href="#profile" data-p="profile" data-ic="user">Profile</a></nav>
+</div></header>
+<main>
+
+<section class="page" id="p-home">
+<svg class="scene" viewBox="0 0 800 230" role="img" aria-label="Illustration: a plane flying from Vietnam to Japan">
+<defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--sk1)"/><stop offset="1" style="stop-color:var(--sk2)"/></linearGradient><path id="fp" d="M110 150 Q400 -30 690 150"/></defs>
+<rect width="800" height="230" fill="url(#sg)"/><circle class="sun" cx="660" cy="50" r="26" style="fill:var(--sun)"/>
+<g class="cl" style="fill:#fff;opacity:.85"><ellipse cx="60" cy="50" rx="40" ry="12"/><ellipse cx="90" cy="42" rx="26" ry="12"/></g><g class="cl cl2" style="fill:#fff;opacity:.7"><ellipse cx="30" cy="95" rx="34" ry="10"/><ellipse cx="55" cy="88" rx="22" ry="10"/></g>
+<path d="M0 230V150Q60 100 130 140T260 150V230Z" style="fill:var(--h1)"/><path d="M0 230V180Q80 140 160 175T300 185V230Z" style="fill:var(--h2)"/>
+<g style="fill:var(--h2)"><rect x="40" y="120" width="14" height="40"/><rect x="60" y="105" width="16" height="55"/><rect x="82" y="128" width="12" height="32"/></g>
+<g style="fill:var(--jp)"><rect x="590" y="150" width="8" height="70"/><rect x="650" y="150" width="8" height="70"/><rect x="575" y="146" width="98" height="9" rx="2"/><rect x="583" y="162" width="82" height="6"/></g>
+<g style="fill:var(--jp)"><polygon points="720,150 760,150 752,140 728,140"/><rect x="730" y="128" width="20" height="12"/><polygon points="722,128 758,128 750,118 730,118"/><rect x="736" y="104" width="8" height="14"/><polygon points="728,104 752,104 744,96 736,96"/></g>
+<use href="#fp" fill="none" style="stroke:var(--mute);stroke-width:2;stroke-dasharray:5 7"/>
+<path d="M-12 -8L12 0L-12 8L-6 0Z" style="fill:#fff;stroke:var(--br);stroke-width:1.5"><animateMotion dur="8s" repeatCount="indefinite" rotate="auto"><mpath href="#fp"/></animateMotion></path>
+</svg>
+<div class="two">
+<div class="card"><h2 style="margin-bottom:12px">Departure</h2><div class="row" style="margin-top:0"><input type="date" id="date" aria-label="Trip date"></div><div class="cd" id="cd" style="margin-top:12px">Not informed yet</div></div>
+<div class="card"><h2 style="margin-bottom:12px">Aviation market pulse</h2><div class="pulse" id="pulse"></div></div>
+</div>
+<div class="tiles" id="tiles"></div>
+<div class="card"><div class="hd"><h2>Aviation news</h2><div class="chips" id="fAv"></div></div><div id="feedAv"></div><div class="note" id="snap"></div></div>
+<div class="card"><div class="hd"><h2>Fare deals</h2><a class="cp" href="#tickets" style="text-decoration:none">All deals and points</a></div><div id="feedDH"></div></div>
+<div class="card"><div class="hd"><h2>Route map</h2></div><div class="map" id="mapH"></div></div>
+</section>
+
+<section class="page" id="p-money">
+<div class="ttl"><div class="bd" data-ic="wallet"></div><h2>Savings</h2></div>
+<div class="fund"><div class="fh"><span>Trip fund</span><span class="chp"></span></div><div class="fa" id="fa">R$ 0,00</div><div class="fs">of <b id="fg">R$ 20.000,00</b> goal</div>
+<div class="ff"><span>CALEBE &amp; LINH</span><svg class="ring" viewBox="0 0 80 80" role="img" aria-label="Progress ring"><circle class="rb" cx="40" cy="40" r="34"/><circle class="rf" id="ring" cx="40" cy="40" r="34" transform="rotate(-90 40 40)"/><text class="rt" x="40" y="45" id="rt">0%</text></svg></div></div>
+<div class="card">
+<div class="kpis"><div class="k"><b id="cur">R$ 0,00</b><span>Saved</span></div><div class="k"><label><input class="goalin" id="goal" type="number" min="1" step="100"><span>Goal (R$), editable</span></label></div><div class="k"><b id="rem">R$ 0,00</b><span>Remaining</span></div><div class="k"><b id="pm">–</b><span id="pml">Needed per month</span></div></div>
+<div class="track" role="progressbar" aria-label="Savings progress" aria-valuemin="0" aria-valuemax="100" id="pb"><div class="fill" id="fill"></div><span class="plc" id="pl" data-ic="plane"></span></div>
+<div class="scale"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span id="pct">100%</span></div>
+<div class="row"><input type="number" id="amt" min="0" step="0.01" placeholder="Amount (R$)" aria-label="Amount in reais"><input type="text" id="note" placeholder="Note (optional)" aria-label="Note"><button class="pri" id="add">Add savings</button><button id="sub">Withdraw</button></div>
+</div>
+<div class="gr2">
+<div class="card"><h2>Deposits by month</h2><div class="bars" id="bars"></div></div>
+<div class="card"><h2 style="margin-bottom:12px">Budget planner</h2><div class="bg" id="bud"></div><div class="mini" style="height:8px"><i id="budbar" style="width:0"></i></div><div class="note" id="budt"></div></div>
+</div>
+<div class="card" style="margin-top:16px"><h2>History</h2><ul class="log" id="log"></ul></div>
+<div class="card"><div class="hd"><h2>Activity log</h2><span class="note" style="margin:0">Every change, with who made it</span></div><ul class="log" id="act"></ul></div>
+</section>
+
+<section class="page" id="p-places">
+<div class="ttl"><div class="bd" data-ic="pin"></div><h2>Places</h2></div>
+<div class="card"><div class="row" style="margin-top:0"><input type="text" id="q" placeholder="Search a country or city (Vietnam, Kyoto, Rio…)" aria-label="Search destinations" autocomplete="off"></div><div id="qres"></div></div>
+<div class="card"><div class="hd"><h2>Route map</h2></div><div class="map" id="mapP"></div></div>
+<div class="pg" id="pg"></div>
+<div class="card" style="margin-top:16px"><div class="row" style="margin-top:0"><input type="text" id="pn" placeholder="Add a place by name" aria-label="New place"><button class="pri" id="pa">Add place</button></div></div>
+<div class="card"><div class="hd"><h2>Destination guide</h2><div class="chips" id="gT"></div></div><div class="pg" id="gd"></div></div>
+</section>
+
+<section class="page" id="p-tickets">
+<div class="ttl"><div class="bd" data-ic="ticket"></div><h2>Tickets <small id="tc" style="font-weight:400;font-size:.85rem;color:var(--mute)"></small></h2></div>
+<div id="tk"></div><p class="hint">Select a ticket to switch it between NO and YES.</p>
+<div class="gr2" style="margin-top:16px">
+<div class="card"><h2 style="margin-bottom:8px">Fare deals</h2><div id="feedD"></div></div>
+<div class="card"><h2 style="margin-bottom:8px">Points and miles</h2><div id="feedP"></div></div>
+</div>
+<div class="note" id="snap2"></div>
+</section>
+
+<section class="page" id="p-rules">
+<div class="ttl"><div class="bd" data-ic="shield"></div><h2>Ground rules</h2></div>
+<div class="card"><ul class="rules" id="rl"></ul><div class="row"><button id="ra">Add a rule</button></div></div>
+<div class="card"><h2 style="margin-bottom:8px">Travel safety news</h2><div id="feedS"></div></div>
+</section>
+
+<section class="page" id="p-chat">
+<div class="ttl"><div class="bd" data-ic="chat"></div><h2>Chat</h2></div>
+<div class="card chat">
+<div class="ch"><b>Calebe and Linh</b><div class="who" id="who"><span class="hint" style="margin:0">I am:</span><button class="cp" data-w="Calebe">Calebe</button><button class="cp" data-w="Linh">Linh</button></div></div>
+<div class="msgs" id="msgs" aria-live="polite"></div>
+<div class="cf"><div class="chips" id="qk"></div><div class="row"><input type="text" id="msg" placeholder="Write a message" aria-label="Message" maxlength="500"><button class="pri" id="send" aria-label="Send" data-ic="plane"></button></div></div>
+</div>
+</section>
+<section class="page" id="p-profile">
+<div class="ttl"><div class="bd" data-ic="user"></div><h2>Profiles</h2></div>
+<div class="gr2" id="pcards"></div>
+<div class="card" id="pedit" style="margin-top:16px"></div>
+</section>
+</main>
+<div class="md" id="md" hidden role="dialog" aria-modal="true" aria-label="Choose your profile"><div class="card mc"><h2>Who’s using the planner?</h2><p class="hint">Pick your profile once. Your account and this device will remember it, so there is nothing to sign up for.</p><div class="pk" id="pk"></div><button class="cp" id="mcl" style="margin-top:14px">Close</button></div></div>
+<script>
+const K="trip2028v4",$=id=>document.getElementById(id),clone=o=>JSON.parse(JSON.stringify(o));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const P={home:"M3 11l9-8 9 8v10H3z",wallet:"M3 7h16a2 2 0 012 2v9a2 2 0 01-2 2H3zM3 7l12-3v3M16 14h3",pin:"M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11zM12 8a2 2 0 100 4 2 2 0 000-4",ticket:"M3 8h18v3a2 2 0 000 4v3H3v-3a2 2 0 000-4zM14 8v10",shield:"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4",chat:"M4 5h16v11H9l-5 4z",plane:"M21 3L3 10l7 3 3 7z",x:"M6 6l12 12M18 6L6 18",user:"M12 12a4 4 0 100-8 4 4 0 000 8zM4 21c0-4 4-6 8-6s8 2 8 6",img:"M4 5h16v14H4zM4 15l5-5 4 4 3-3 4 4"};
+const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${P[n]}"/></svg>`;
+document.querySelectorAll("[data-ic]").forEach(e=>e.insertAdjacentHTML("afterbegin",ic(e.dataset.ic)));
+
+/* data: snapshot of news from Nov 14, 2026 (can be replaced live from the shared db) */
+let NEWS={upd:"Nov 14, 2026",
+pulse:[{r:"Brazil",tr:"down",x:"November domestic schedule trimmed about 5% as jet fuel costs rise; GOL adds a fifth weekly Rio–Lisbon flight from Nov 24."},{r:"Japan",tr:"up",x:"Foreign carriers add winter capacity: Philippine Airlines lifts Manila–Tokyo and Osaka from 14 to 21 weekly flights through March."},{r:"Vietnam",tr:"up",x:"Vietnam Airlines and Vietjet are expanding to Japan, with Hanoi–Osaka rising to 14 weekly flights from Dec 1."}],
+av:[{r:"Brazil",t:"Brazil trims planned November domestic flights by about 5%",x:"The revised schedule lists 66,210 flights against 69,545 forecast earlier. Jet fuel rose again on Nov 1, around 7.2% at the distributor price. It is a lower forecast, not a mass cancellation of sold tickets.",s:"Rus Tourism News",u:"https://www.rustourismnews.com/2026/11/02/brazil-cuts-november-flight-plans-by-3335-services-as-fuel-costs-surge/",d:"Nov 2, 2026"},
+{r:"Brazil",t:"GOL adds a fifth weekly Rio de Janeiro–Lisbon flight",x:"The extra frequency starts on Nov 24, 2026, as GOL grows its Europe service.",s:"AeroRoutes",u:"https://www.aeroroutes.com/eng/260904-g3nov26lis",d:"Sep 2026"},
+{r:"Vietnam",t:"Vietnam Airlines adds Northeast Asia flights",x:"Hanoi–Osaka goes to 11 weekly flights, then 14 from Dec 1. Da Nang–Tokyo rises to 11 and Da Nang–Osaka to 5, with a round-trip fare promotion.",s:"Vietnam News Agency",u:"https://vietnam.vnanet.vn/english/tin-van/vietnam-airlines-to-add-more-flights-to-northeast-asia-amid-rising-travel-demand-455963.html",d:"2026"},
+{r:"Vietnam",t:"Vietjet opens new routes, including Osaka",x:"New services start from Nov 10, 2026, linking Vietnam with the Philippines, Chiang Mai and Osaka, alongside a fare promotion.",s:"PortCalls",u:"https://portcalls.com/vietjet-launches-new-flights-to-cebu-clark-chiang-mai-osaka/",d:"2026"},
+{r:"Japan",t:"Philippine Airlines grows its Japan network",x:"Manila–Tokyo Narita and Osaka Kansai rise from 14 to 21 weekly flights between Oct 25 and Mar 27, taking Japan to as many as 87 weekly flights.",s:"TTG Asia",u:"https://www.ttgasia.com/2026/07/10/aviation-roundup-philippine-airlines-vietjet-and-more-2/",d:"Jul 2026"}],
+deals:[{r:"Vietnam",t:"Early-booking fares up to 25% off between Japan and Vietnam",x:"Vietnam Airlines’ 2026 offer applies to tickets bought at least 60 days before departure, in both directions and in economy, premium economy and business.",s:"Vietnam Airlines",u:"https://www.vietnamairlines.com/en-jp/promotion-code-jp-2026",d:"2026"},
+{r:"Japan",t:"Flash sale: up to 20% off Japan–Vietnam flights",x:"Promo codes were limited, must be typed in capitals and cannot be combined with other offers or used on multi-segment tickets.",s:"Vietnam Airlines",u:"https://www.vietnamairlines.com/en-jp/flash-sale-jp-2026",d:"2026"},
+{r:"Japan",t:"Weekend special: 10% off Japan–Vietnam flights",x:"A 2026 weekend discount in both directions. Check booking class and dates on the airline page.",s:"Vietnam Airlines",u:"https://www.vietnamairlines.com/en-jp/weekend-sale-japan",d:"2026"},
+{r:"Vietnam",t:"Vietjet promo fares also cover domestic flights to Da Lat",x:"The promotion spans direct routes to Japan, Korea, Thailand and the Philippines plus domestic routes including Da Lat. Fares and dates change fast.",s:"PortCalls",u:"https://portcalls.com/vietjet-launches-new-flights-to-cebu-clark-chiang-mai-osaka/",d:"2026"},
+{r:"Brazil",t:"No Brazil–Asia fare sale found in this check",x:"The deals found connect Japan and Vietnam. For Brazil to Asia, set fare alerts and compare itineraries with one stop.",s:"Claude’s note",u:"",d:"Nov 14, 2026"}],
+pts:[{r:"Brazil",t:"Smiles ran up to 70% bonus on points transfers",x:"The campaign for Livelo and Esfera transfers ended on Nov 13, 2026, but similar bonuses come back often. Transfer only during a bonus.",s:"Passageiro de Primeira",u:"https://passageirodeprimeira.com/?p=578411",d:"Nov 2026"},
+{r:"Brazil",t:"LATAM Pass gave 25% bonus on Sem Parar Mais transfers",x:"The promotion ran Nov 9–10, 2026, required registering the CPF first and added 1,000 miles on the first transfer.",s:"Cartões e Viagens",u:"https://cartoeseviagens.com.br/anhe-25-extras-e-1000-milhas-na-1a-vez-latam-pass-sem-parar",d:"Nov 2026"},
+{r:"Brazil",t:"Brazilian programs compete with frequent flash bonuses",x:"Livelo, Smiles, Esfera and LATAM Pass regularly run 50–100% transfer bonuses, so waiting for one can make miles much cheaper.",s:"Lanzo",u:"https://lanzo-web.pages.dev/blog/livelo-vs-smiles-vs-esfera",d:"2026"}],
+saf:[{r:"Japan",t:"Typhoon advisory for the Ryukyu Islands",x:"Canada updated its Japan advice on Oct 22, 2026 for Typhoon Champi, urging travellers to avoid non-essential travel to Okinawa and nearby islands, and noting El Niño may affect weather.",s:"Insauga",u:"https://www.insauga.com/canada-updates-travel-advisories-for-japan-france-and-sought-after-destinations/",d:"Oct 22, 2026"},
+{r:"Japan",t:"US advisory level for Japan: normal precautions",x:"The State Department rates Japan Level 1, its lowest advisory level.",s:"travel.state.gov",u:"https://travel.state.gov/en/international-travel/travel-advisories/japan.html",d:"2026"},
+{r:"Japan",t:"UK advice covers earthquakes, tsunamis and bears",x:"The January 2026 update added earthquake and tsunami guidance and warnings about bear sightings and attacks.",s:"GOV.UK (via govdiff)",u:"https://govdiff.njk.onl/update/2025-07-16T10:14:00+01:00/www.gov.uk/foreign-travel-advice/japan",d:"Jan 2026"},
+{r:"Vietnam",t:"Road safety and petty crime are the main risks",x:"Canada flags road safety and crime. Bag snatching and tourist scams are common in cities, so keep phones and bags secure.",s:"Insauga",u:"https://www.insauga.com/canada-updates-travel-advisories-for-japan-france-and-sought-after-destinations/",d:"Oct 2026"},
+{r:"Vietnam",t:"Tropical storm season runs from May to November",x:"Storms can cause serious disruption. Follow local authorities and check with your airline and hotel.",s:"GOV.UK (via govukdiff)",u:"https://govukdiff.njk.onl/update/2025-12-10T13:01:00+00:00/www.gov.uk/foreign-travel-advice/vietnam",d:"2025"},
+{r:"Brazil",t:"Brazil is rated Level 2: increased caution",x:"A destination tracker lists Brazil at Level 2 in the US advisory system. Plan routes and nighttime transport carefully.",s:"Destination.com",u:"https://www.destination.com/travel-info/safety",d:"Apr 2026"},
+{r:"Brazil",t:"Before you fly: insurance and documents",x:"Buy travel insurance, keep digital copies of your passport and tickets, and confirm each country’s entry rules shortly before departure.",s:"Claude’s note",u:"",d:"Nov 14, 2026"}]};
+const GEO={"da lat":[11.94,108.44,"dalat","Vietnam"],"hcmc":[10.78,106.7,"hcmc","Vietnam"],"ho chi minh city":[10.78,106.7,"hcmc","Vietnam"],"hanoi":[21.03,105.85,"hcmc","Vietnam"],"hoi an":[15.88,108.33,"vietnam","Vietnam"],"da nang":[16.05,108.2,"vietnam","Vietnam"],"ha long bay":[20.91,107.18,"vietnam","Vietnam"],"phu quoc":[10.29,103.98,"vietnam","Vietnam"],"hue":[16.46,107.59,"vietnam","Vietnam"],"ninh binh":[20.25,105.97,"vietnam","Vietnam"],"kyoto":[35.01,135.77,"kyoto","Japan"],"tokyo":[35.68,139.65,"hcmc","Japan"],"osaka":[34.69,135.5,"kyoto","Japan"],"nara":[34.69,135.8,"kyoto","Japan"],"hokkaido":[43.06,141.35,"japan","Japan"],"hiroshima":[34.39,132.45,"kyoto","Japan"],"mount fuji":[35.36,138.73,"japan","Japan"],"rio de janeiro":[-22.91,-43.17,"brazil","Brazil"],"sao paulo":[-23.55,-46.63,"hcmc","Brazil"],"uberlandia":[-18.92,-48.28,"brazil","Brazil"],"fernando de noronha":[-3.85,-32.42,"brazil","Brazil"],"salvador":[-12.97,-38.5,"brazil","Brazil"],"florianopolis":[-27.6,-48.55,"brazil","Brazil"],"foz do iguacu":[-25.54,-54.59,"brazil","Brazil"],"bonito":[-21.12,-56.48,"dalat","Brazil"],"lencois maranhenses":[-2.53,-43.13,"brazil","Brazil"]};
+const GUIDE={Vietnam:[["Da Lat","Cool highland city of pine forests, lakes and French-colonial villas."],["Hoi An","Lantern-lit old town on the central coast, known for tailors and food."],["Ha Long Bay","Limestone islands rising from emerald water, best seen by boat."],["Ninh Binh","River valleys and karst peaks, often called Ha Long Bay on land."],["Phu Quoc","Island with beaches and sunsets, easy to reach from Ho Chi Minh City."]],
+Japan:[["Kyoto","Temples, torii gates, tea houses and the best-preserved old streets."],["Tokyo","Huge, orderly and endlessly varied, from shrines to neon districts."],["Osaka","Street food capital with a lively castle and nightlife scene."],["Nara","Friendly deer and giant Buddha, an easy day trip from Kyoto."],["Hokkaido","Cool summers, ski winters and wide open landscapes in the north."]],
+Brazil:[["Rio de Janeiro","Beaches, Sugarloaf and Christ the Redeemer in one city."],["Fernando de Noronha","Protected island archipelago with clear water and turtles."],["Lencois Maranhenses","White dunes filled with rainwater lagoons, best from June to September."],["Bonito","Rivers so clear you can snorkel through them."],["Foz do Iguacu","Massive waterfalls on the border with Argentina."]]};
+const ART={dalat:'<path d="M0 120Q80 70 160 100T300 90V160H0Z" fill="var(--h1)"/><g fill="var(--h2)"><path d="M40 130l12-40 12 40zM70 135l14-48 14 48zM230 128l12-38 12 38zM255 134l10-34 10 34z"/></g><ellipse cx="160" cy="148" rx="70" ry="9" fill="var(--sk1)" opacity=".7"/>',
+hcmc:'<g fill="var(--h2)"><rect x="30" y="80" width="26" height="80"/><rect x="62" y="50" width="22" height="110"/><rect x="90" y="95" width="28" height="65"/><rect x="190" y="70" width="24" height="90"/><rect x="220" y="100" width="30" height="60"/></g><path d="M135 160V30l8 20 8-20v130z" fill="var(--h1)"/><path d="M0 150Q80 140 160 150T300 148V160H0Z" fill="var(--sk1)" opacity=".8"/>',
+kyoto:'<g fill="var(--jp)"><rect x="60" y="70" width="8" height="90"/><rect x="112" y="70" width="8" height="90"/><rect x="48" y="62" width="84" height="9" rx="2"/><rect x="58" y="80" width="64" height="6"/></g><g fill="var(--h2)"><rect x="205" y="110" width="40" height="50"/><polygon points="195,110 255,110 245,98 205,98"/><rect x="212" y="84" width="26" height="14"/><polygon points="204,84 246,84 238,72 212,72"/><rect x="220" y="56" width="10" height="16"/></g>',
+brazil:'<path d="M0 130Q60 60 110 110T200 100Q250 70 300 120V160H0Z" fill="var(--h1)"/><path d="M150 160V70q0-14 14-14t14 14v90z" fill="var(--h2)"/><circle cx="240" cy="40" r="20" fill="var(--sun)"/>',
+vietnam:'<g fill="var(--h2)"><path d="M20 160V90q10-30 22 0v70zM90 160V60q12-40 26 0v100zM200 160V80q10-30 24 0v80z"/></g><path d="M0 150Q80 135 160 150T300 148V160H0Z" fill="var(--h1)"/>',
+japan:'<path d="M60 160L130 40h40l70 120z" fill="var(--h2)"/><path d="M130 40h40l10 18q-30 10-60 0z" fill="#fff" opacity=".9"/><circle cx="250" cy="35" r="16" fill="var(--jp)"/>',
+def:'<path d="M0 140L90 60l60 60 50-40 100 80V160H0z" fill="var(--h1)"/>'};
+const art=k=>`<div class="art"><svg viewBox="0 0 300 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${ART[k]||ART.def}</svg></div>`;
+const norm=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+const geo=n=>GEO[norm(n)];
+const tc=k=>k==="hcmc"?"HCMC":k.replace(/\b(?!(?:do|de)\b)\w/g,c=>c.toUpperCase());
+
+/* map (dot-matrix, free: drawn in code) */
+const POLY=[[[-81,-5],[-77,8],[-60,10],[-50,0],[-35,-6],[-39,-18],[-48,-26],[-58,-38],[-65,-42],[-68,-54],[-73,-50],[-72,-30],[-70,-18]],
+[[-125,48],[-95,50],[-62,50],[-55,47],[-70,42],[-81,30],[-80,25],[-97,25],[-105,20],[-92,15],[-83,9],[-90,14],[-110,25],[-117,32],[-125,42]],
+[[-17,21],[-6,36],[10,37],[32,31],[43,12],[51,12],[40,-5],[40,-16],[33,-27],[20,-35],[12,-18],[9,-1],[-8,4],[-17,14]],
+[[-10,36],[-9,43],[-2,48],[5,52],[10,58],[20,70],[40,68],[40,45],[28,41],[12,38]],
+[[28,41],[40,68],[70,73],[110,77],[150,72],[150,60],[140,50],[135,35],[122,30],[122,22],[108,18],[106,9],[100,2],[98,16],[92,22],[80,8],[72,20],[58,24],[50,28],[35,30],[28,36]],
+[[130,31],[132,34],[135,34],[141,38],[142,43],[145,44],[141,45],[139,40],[136,37],[131,34]],
+[[114,-22],[122,-18],[136,-12],[142,-11],[153,-26],[150,-37],[140,-38],[131,-31],[115,-34]],
+[[95,5],[105,-6],[115,-9],[120,-9],[110,-1],[103,1]],[[109,1],[116,7],[119,1],[116,-3],[110,-3]]];
+const inP=(x,y,p)=>{let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const[a,b]=p[i],[d,e]=p[j];if((b>y)!=(e>y)&&x<(d-a)*(y-b)/(e-b)+a)c=!c}return c};
+const X0=-80,X1=150,Y0=45,Y1=-40,KK=4,W=(X1-X0)*KK,H=(Y0-Y1)*KK,px=o=>(o-X0)*KK,py=a=>(Y0-a)*KK;
+let DOTS="";for(let o=X0;o<X1;o+=2.2)for(let a=Y0;a>Y1;a-=2.2)if(POLY.some(p=>inP(o,a,p)))DOTS+=`M${px(o).toFixed(0)} ${py(a).toFixed(0)}h0`;
+let selKey="";
+function mapSVG(){
+ const hm=GEO.uberlandia,st=[{n:"Uberlândia",x:px(hm[1]),y:py(hm[0]),h:1}];
+ S.places.forEach(p=>{const g=geo(p);if(g)st.push({n:p,x:px(g[1]),y:py(g[0])})});
+ let arcs="",pins="";
+ for(let i=1;i<st.length;i++){const a=st[i-1],b=st[i],d=Math.hypot(b.x-a.x,b.y-a.y);arcs+=`<path class="arc" d="M${a.x} ${a.y}Q${(a.x+b.x)/2} ${Math.min(a.y,b.y)-d*.28} ${b.x} ${b.y}"/>`}
+ const pin=(s,i,c)=>`<g class="${c}"><title>${esc(s.n)}</title><circle class="pr" cx="${s.x}" cy="${s.y}" r="4"/><circle class="pn" cx="${s.x}" cy="${s.y}" r="5"/><text class="lb" x="${s.x+9}" y="${s.y+(i%2?16:-8)}">${esc(s.n)}</text></g>`;
+ st.forEach((s,i)=>pins+=pin(s,i,s.h?"home":""));
+ const sg=GEO[selKey];if(sg)pins+=pin({n:tc(selKey),x:px(sg[1]),y:py(sg[0])},0,"sel");
+ return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Map of the trip route"><path class="dots" d="${DOTS}"/>${arcs}${pins}</svg>`}
+
+/* state */
+const DEF={goal:20000,log:[],date:"",places:["Da Lat","HCMC","Kyoto"],photos:{},bud:{},act:[],prof:{Calebe:{c:"blue",n:"Calebe",bio:""},Linh:{c:"teal",n:"Linh",bio:""}},t:{Calebe:{Vietnam:0,Japan:0,Brazil:0},Linh:{Japan:0,Vietnam:0}},
+rules:["This is the hardest trip of my life. If we need more time, we wait.","Avoid a rushed trip. It is essential to avoid wasting more money than planned.","Money is 100% essential. Delaying the trip by one or more months must stay an option, so the trip is comfortable and we do not worry about money or the cheapest place to visit and eat.","Be 100% honest and transparent with parents. If they ask something, answer without lying. A plan built on the truth is better than keeping up a lie.","If 2028 is really the year we meet, we start saving now. No spending on sky outfits or other things. This money is for our trip.","Before spending a single cent on this trip, make the plans and what we are going to do very clear to your parents.","This plan can be edited at any time, so always keep an eye on it."]};
+let S=clone(DEF),ref=null,col=null,AS=null,lastJSON="",timer=null,msgs=[],page="home",me="",fAv="All",gT="Vietnam";
+try{me=localStorage.getItem(K+"me")||""}catch(e){}
+const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const total=()=>Math.max(0,S.log.reduce((a,b)=>a+b.v,0));
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const mk=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;e.innerHTML=h;return e};
+function status(t,c){const e=$("st");e.textContent=t;e.className="st "+(c||"")}
+function save(){const j=JSON.stringify(S);lastJSON=j;try{localStorage.setItem(K,j)}catch(e){}
+ if(!ref)return;status("Saving…");clearTimeout(timer);timer=setTimeout(()=>ref.set({s:j}).then(()=>status("Saved and shared","ok")).catch(()=>status("Could not save to the shared copy","bad")),400)}
+function tween(id,to,fmt){const e=$(id),from=parseFloat(e.dataset.v||0),t0=performance.now();e.dataset.v=to;const f=t=>{const k=Math.min(1,(t-t0)/900),v=from+(to-from)*(1-Math.pow(1-k,3));e.textContent=fmt(v);if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+const days=()=>S.date?Math.ceil((new Date(S.date+"T00:00:00")-new Date())/864e5):null;
+const addPlace=n=>{n=n.trim();if(!n||S.places.some(p=>norm(p)===norm(n)))return;S.places.push(n);act("Added place "+n);save();renderAll()};
+
+/* profiles */
+let DB=null,UID=null;
+const PAL={blue:["#0f4c81","#1b86c7"],teal:["#0d6b5f","#14917d"],violet:["#5b3fa0","#7c5cd6"],rose:["#a8305f","#d4568a"],amber:["#a65d0a","#d98a1c"],green:["#2f6b34","#4a9a50"]};
+const dk=()=>matchMedia("(prefers-color-scheme:dark)").matches;
+const pc=w=>PAL[((S.prof||{})[w]||{}).c]||PAL.blue;
+const pcol=w=>pc(w)[dk()?1:0];
+const pname=w=>((S.prof||{})[w]||{}).n||w||"Someone";
+function avatar(w,s){const a=el("span","av",pname(w)[0].toUpperCase());a.style.background=pcol(w);if(s){a.style.width=a.style.height=s+"px";a.style.fontSize=Math.round(s*.42)+"px"}return a}
+function theme(){const r=document.documentElement.style,p=pc(me),d=dk();r.setProperty("--hb",p[0]);r.setProperty("--hb2",p[1]);r.setProperty("--br",d?`color-mix(in srgb,${p[1]} 80%,#fff)`:p[0]);r.setProperty("--br2",p[1]);r.setProperty("--soft",`color-mix(in srgb,${p[1]} ${d?18:11}%,var(--card))`)}
+function act(t){S.act=(S.act||[]).concat([{w:me,a:t,ts:Date.now()}]).slice(-200);renderAct()}
+async function persistMe(){try{localStorage.setItem(K+"me",me)}catch(e){}if(DB&&UID){try{await DB.collection("data/users/"+UID).doc("me").set({who:me})}catch(e){}}}
+function setMe(w){me=w;persistMe();shown.clear();$("msgs").innerHTML="";$("md").hidden=true;renderAll();renderChat()}
+function renderHdr(){const b=$("pfb");b.innerHTML="";if(me&&S.prof[me]){b.append(avatar(me,28),el("span","",pname(me)))}else b.textContent="Choose profile"}
+function renderModal(){const pk=$("pk");pk.innerHTML="";Object.keys(S.prof).forEach(k=>{const b=el("button","");b.append(avatar(k,52),el("span","",pname(k)));b.onclick=()=>setMe(k);pk.appendChild(b)});$("mcl").hidden=!me}
+function askWho(){if(!me||!S.prof[me]){renderModal();$("md").hidden=false}}
+$("pfb").onclick=()=>{renderModal();$("md").hidden=false};$("mcl").onclick=()=>{$("md").hidden=true};
+function renderAct(){const ul=$("act");if(!ul)return;ul.innerHTML="";const a=(S.act||[]).slice().reverse().slice(0,60);if(!a.length){ul.appendChild(el("li","empty","No activity yet. Changes will show up here with the name of who made them."));return}
+ a.forEach(x=>{const li=el("li"),l=el("span","ai"),t=el("span");l.appendChild(avatar(x.w,26));t.append(el("b","",x.w?pname(x.w):"Someone"),document.createTextNode(" "+x.a));l.appendChild(t);li.append(l,el("small","",new Date(x.ts).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})));ul.appendChild(li)})}
+function renderProfile(){const box=$("pcards");box.innerHTML="";
+ Object.keys(S.prof).forEach(k=>{const p=S.prof[k],c=el("div","card pcd");c.style.setProperty("--pc",pcol(k));c.style.margin="0";
+  const top=el("div","ai"),t=el("div");t.append(el("h2","",pname(k)),el("span","hint",p.bio||"No bio yet"));top.append(avatar(k,64),t);
+  const saved=S.log.filter(e=>e.by===k&&e.v>0).reduce((s,e)=>s+e.v,0),n=(S.act||[]).filter(x=>x.w===k),last=n[n.length-1];
+  const st=mk("div","stt",`<div><b>${brl(saved)}</b><span>Saved</span></div><div><b>${n.length}</b><span>Changes</span></div><div><b>${last?new Date(last.ts).toLocaleDateString("en-GB"):"–"}</b><span>Last active</span></div>`);
+  const b=el("button",k===me?"cp on":"pri",k===me?"This is you":"Use this profile");b.disabled=k===me;b.style.marginTop="14px";b.onclick=()=>setMe(k);c.append(top,st,b);box.appendChild(c)});
+ const e=$("pedit");e.innerHTML="";if(!me||!S.prof[me]){e.appendChild(el("p","hint","Pick a profile above to customize it."));return}
+ const p=S.prof[me];e.appendChild(el("h2","","Customize "+pname(me)));
+ const f=(lab,val,ph,on,max)=>{const l=el("label","fld",lab),i=el("input");i.type="text";i.value=val;i.placeholder=ph;i.maxLength=max;i.onchange=()=>on(i.value.trim());l.appendChild(i);e.appendChild(l)};
+ f("Display name",p.n||me,"Your name",v=>{p.n=v||me;act("Changed display name to "+p.n);save();renderAll()},24);
+ f("Short bio",p.bio||"","What are you looking forward to?",v=>{p.bio=v;act("Updated bio");save();renderAll()},80);
+ e.appendChild(el("p","hint","Profile color. It changes the whole page for you and marks your entries for both of you."));
+ const sw=el("div","sw");Object.keys(PAL).forEach(k=>{const b=el("button",p.c===k?"on":"");b.style.background=PAL[k][dk()?1:0];b.setAttribute("aria-label",k);b.onclick=()=>{p.c=k;act("Changed profile color to "+k);save();renderAll()};sw.appendChild(b)});e.appendChild(sw)}
+
+/* routing */
+function route(){const h=(location.hash||"#home").slice(1);page=["home","money","places","tickets","rules","chat","profile"].includes(h)?h:"home";
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id==="p-"+page));
+ document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.p===page));
+ [...$("p-"+page).children].forEach((c,i)=>c.style.setProperty("--i",i));
+ if(page==="chat"){try{localStorage.setItem(K+"seen",Date.now())}catch(e){}setTimeout(()=>{$("msgs").scrollTop=1e9},50)}
+ window.scrollTo(0,0);renderAll()}
+addEventListener("hashchange",route);
+
+/* feeds */
+const feed=(id,items,max)=>{const b=$(id);b.innerHTML="";items.slice(0,max||99).forEach((n,i)=>{const a=mk("article","nw",`<div class="m"><span class="tg t-${esc(n.r)}">${esc(n.r)}</span><span>${esc(n.d)}</span></div><h3>${esc(n.t)}</h3><p>${esc(n.x)}</p>${n.u?`<a href="${esc(n.u)}" target="_blank" rel="noopener noreferrer">${esc(n.s)}</a>`:`<span class="note">${esc(n.s)}</span>`}`);a.style.animationDelay=i*60+"ms";b.appendChild(a)})};
+function renderFeeds(){
+ const pu=$("pulse");pu.innerHTML="";NEWS.pulse.forEach(p=>pu.appendChild(mk("div","pl2",`<span class="tr ${p.tr}">${p.tr==="up"?"Growing":"Trimmed"}</span><div><b>${esc(p.r)}</b><p>${esc(p.x)}</p></div>`)));
+ const f=$("fAv");f.innerHTML="";["All","Brazil","Japan","Vietnam"].forEach(r=>{const b=el("button","cp"+(r===fAv?" on":""),r);b.onclick=()=>{fAv=r;renderFeeds()};f.appendChild(b)});
+ feed("feedAv",NEWS.av.filter(n=>fAv==="All"||n.r===fAv));feed("feedDH",NEWS.deals,3);
+ feed("feedD",NEWS.deals);feed("feedP",NEWS.pts);feed("feedS",NEWS.saf);
+ $("snap").textContent=$("snap2").textContent=`News snapshot updated ${NEWS.upd}. Ask Claude to refresh it; links open the original sources.`}
+
+/* home */
+function renderHome(){const d=days(),c=$("cd");c.textContent=d==null?"Not informed yet":d>0?`${d} days to go`:d===0?"Today is the day":"Trip in progress or done";$("date").value=S.date;
+ const tot=total(),pct=Math.min(100,tot/S.goal*100),y=Object.values(S.t).reduce((a,o)=>a+Object.values(o).filter(Boolean).length,0),all=Object.values(S.t).reduce((a,o)=>a+Object.keys(o).length,0),last=msgs[msgs.length-1];
+ const T=[["wallet","Savings",brl(tot),`${pct.toFixed(1)}% of ${brl(S.goal)}`,pct,"money"],["pin","Places",S.places.length+" planned",S.places.join(", ")||"Add your first place",100,"places"],["ticket","Tickets",`${y} of ${all}`,"booked",all?y/all*100:0,"tickets"],["chat","Chat",last?last.who:"No messages",last?last.text.slice(0,40):"Say hello",100,"chat"]];
+ const box=$("tiles");box.innerHTML="";T.forEach(t=>{const a=el("a","tile");a.href="#"+t[5];a.innerHTML=`<span>${ic(t[0],16)} ${t[1]}</span>`;a.append(el("b","",t[2]),el("span","",t[3]));const m=el("div","mini"),i=el("i");i.style.width="0";m.appendChild(i);a.appendChild(m);box.appendChild(a);requestAnimationFrame(()=>requestAnimationFrame(()=>i.style.width=t[4]+"%"))});
+ $("mapH").innerHTML=mapSVG()}
+$("date").onchange=e=>{S.date=e.target.value;act(S.date?"Set the trip date to "+new Date(S.date+"T00:00:00").toLocaleDateString("en-GB"):"Cleared the trip date");save();renderAll()};
+
+/* money */
+function renderMoney(){const tot=total(),pct=Math.min(100,tot/S.goal*100),rem=Math.max(0,S.goal-tot);
+ tween("cur",tot,brl);tween("fa",tot,brl);tween("rem",rem,brl);$("fg").textContent=brl(S.goal);$("goal").value=S.goal;$("fill").style.width=pct+"%";$("pl").style.left=pct+"%";$("pb").setAttribute("aria-valuenow",Math.round(pct));$("pct").textContent=pct.toFixed(1)+"%";
+ $("ring").style.strokeDashoffset=214*(1-pct/100);$("rt").textContent=Math.round(pct)+"%";
+ const d=days();if(d!=null&&d>0&&rem>0){const m=Math.max(1,Math.ceil(d/30.44));$("pm").textContent=brl(rem/m);$("pml").textContent=`Needed per month (${m} left)`}else{$("pm").textContent=rem>0?"–":"Goal reached";$("pml").textContent=rem>0?"Set a date to see this":"Needed per month"}
+ const ul=$("log");ul.innerHTML="";if(!S.log.length)ul.appendChild(el("li","empty","No entries yet. Add the first deposit above."));
+ S.log.slice().reverse().slice(0,40).forEach(en=>{const li=el("li"),a=el("span","",en.n||"Deposit");a.style.cssText="display:flex;gap:8px;align-items:center";if(en.by)a.prepend(avatar(en.by,24));a.appendChild(el("small","",(en.by?pname(en.by)+" · ":"")+en.d));const r=el("span"),b=el("span",en.v>=0?"pos":"neg",(en.v>=0?"+ ":"– ")+brl(Math.abs(en.v))),x=mk("button","x",ic("x",14));x.setAttribute("aria-label","Delete entry");x.onclick=()=>{act(`Deleted a ${brl(Math.abs(en.v))} ${en.v>=0?"deposit":"withdrawal"}${en.by?" by "+pname(en.by):""}`);S.log.splice(S.log.indexOf(en),1);save();renderAll()};r.append(b,x);li.append(a,r);ul.appendChild(li)});
+ const now=new Date(),ms=[];for(let i=5;i>=0;i--){const t=new Date(now.getFullYear(),now.getMonth()-i,1);ms.push({k:`${String(t.getMonth()+1).padStart(2,"0")}/${t.getFullYear()}`,l:t.toLocaleString("en",{month:"short"}),v:0})}
+ S.log.forEach(en=>{const p=(en.d||"").split("/");const m=ms.find(x=>x.k===`${p[1]}/${p[2]}`);if(m)m.v+=en.v});
+ const mx=Math.max(1,...ms.map(m=>Math.max(0,m.v)));$("bars").innerHTML=ms.map(m=>`<div><i style="height:${Math.max(0,m.v)/mx*100}%" title="${brl(m.v)}"></i>${m.l}</div>`).join("");
+ const C=["Flights","Lodging","Food","Local transport","Visa and insurance","Emergency"],bd=$("bud");if(!bd.children.length||bd.dataset.n!==JSON.stringify(S.bud)){bd.innerHTML="";C.forEach(c=>{bd.appendChild(el("label","",c));const i=el("input");i.type="number";i.min="0";i.step="50";i.value=S.bud[c]||"";i.setAttribute("aria-label",c+" budget");i.onchange=()=>{S.bud[c]=Math.max(0,parseFloat(i.value)||0);act(`Set ${c} budget to ${brl(S.bud[c])}`);save();renderAll()};bd.appendChild(i)});bd.dataset.n=JSON.stringify(S.bud)}
+ const al=C.reduce((a,c)=>a+(S.bud[c]||0),0);$("budbar").style.width=Math.min(100,al/S.goal*100)+"%";$("budt").textContent=al>S.goal?`Allocated ${brl(al)}: ${brl(al-S.goal)} over the goal.`:`Allocated ${brl(al)} of ${brl(S.goal)}. ${brl(S.goal-al)} unassigned.`}
+function addMoney(s){const v=parseFloat($("amt").value);if(!v||v<=0){$("amt").focus();return}S.log.push({v:s*v,by:me,n:$("note").value.trim(),d:new Date().toLocaleDateString("en-GB")});act(`${s>0?"Added":"Withdrew"} ${brl(v)}${$("note").value.trim()?` for “${$("note").value.trim()}”`:""}`);$("amt").value="";$("note").value="";save();renderAll()}
+$("add").onclick=()=>addMoney(1);$("sub").onclick=()=>addMoney(-1);$("goal").onchange=e=>{S.goal=Math.max(1,parseFloat(e.target.value)||20000);act("Set the goal to "+brl(S.goal));save();renderAll()};
+
+/* places */
+function renderPlaces(){const g=$("pg");g.innerHTML="";
+ S.places.forEach((p,i)=>{const gg=geo(p),c=el("div","pc");c.style.setProperty("--i",i);
+  c.innerHTML=S.photos[p]?`<img src="${esc(S.photos[p])}" alt="${esc(p)}">`:art(gg?gg[2]:"def");
+  const b=el("div","b"),n=el("span","nm",p);n.contentEditable="true";n.onblur=()=>{const v=n.textContent.trim();if(v&&v!==S.places[i]){if(S.photos[S.places[i]]){S.photos[v]=S.photos[S.places[i]];delete S.photos[S.places[i]]}act(`Renamed place ${S.places[i]} to ${v}`);S.places[i]=v;save();renderAll()}};
+  b.append(n,el("span","co",gg?gg[3]:"Custom place"));
+  const r=el("div","row");if(AS){const f=el("input");f.type="file";f.accept="image/*";f.hidden=true;f.onchange=async()=>{if(!f.files[0])return;try{status("Uploading photo…");const u=await AS.upload(f.files[0]);S.photos[S.places[i]]=u.url;act("Added a photo to "+S.places[i]);save();renderAll()}catch(e){status("Photo upload failed","bad")}};const bt=mk("button","sm",ic("img",14)+" Photo");bt.onclick=()=>f.click();r.append(f,bt)}
+  b.appendChild(r);const x=mk("button","x",ic("x",14));x.setAttribute("aria-label","Remove place");x.onclick=()=>{act("Removed place "+S.places[i]);S.places.splice(i,1);save();renderAll()};c.append(b,x);g.appendChild(c)});
+ $("mapP").innerHTML=mapSVG();
+ const gt=$("gT");gt.innerHTML="";Object.keys(GUIDE).forEach(k=>{const b=el("button","cp"+(k===gT?" on":""),k);b.onclick=()=>{gT=k;renderPlaces()};gt.appendChild(b)});
+ const gd=$("gd");gd.innerHTML="";GUIDE[gT].forEach((d,i)=>{const gg=geo(d[0]),c=el("div","pc");c.style.setProperty("--i",i);c.innerHTML=art(gg?gg[2]:"def");const b=el("div","b");b.append(el("span","nm",d[0]),el("span","co",d[1]));const r=el("div","row"),a=el("button","sm",S.places.some(p=>norm(p)===norm(d[0]))?"Added":"Add to places");a.onclick=()=>addPlace(d[0]);const m=el("button","sm","Show on map");m.onclick=()=>{selKey=norm(d[0]);renderPlaces();$("mapP").scrollIntoView({behavior:"smooth",block:"center"})};r.append(a,m);b.appendChild(r);c.appendChild(b);gd.appendChild(c)})}
+$("pa").onclick=()=>{addPlace($("pn").value);$("pn").value=""};
+$("q").oninput=()=>{const q=norm($("q").value),box=$("qres");box.innerHTML="";if(!q)return;const seen=new Set();
+ Object.entries(GEO).filter(([k,v])=>k.includes(q)||norm(v[3]).includes(q)).forEach(([k,v])=>{const id=v[0]+","+v[1];if(seen.has(id)||seen.size>=6)return;seen.add(id);
+  const r=mk("div","sr",art(v[2]));r.append(el("span","nm",tc(k)+", "+v[3]));const m=el("button","sm","Show");m.onclick=()=>{selKey=k;renderPlaces()};const a=el("button","sm pri","Add");a.onclick=()=>addPlace(tc(k));r.append(m,a);box.appendChild(r)});
+ if(!seen.size)box.appendChild(el("p","hint","No match yet. Add it by name below; it will appear in your list without a map pin."))};
+
+/* tickets */
+function renderTickets(){const box=$("tk");box.innerHTML="";let y=0,all=0,i=0;Object.keys(S.t).forEach(who=>{const c=el("div","card");const hh=el("h2","",pname(who));hh.style.cssText="display:flex;gap:10px;align-items:center";hh.prepend(avatar(who,28));c.appendChild(hh);Object.keys(S.t[who]).forEach(leg=>{all++;const on=S.t[who][leg];if(on)y++;const b=el("button","bp "+(on?"yes":"no"));b.style.setProperty("--i",i++);const l=mk("div","l",ic("plane",22));const t=el("div");t.append(el("b","",leg),el("span","",who+"’s ticket"));l.appendChild(t);b.append(l,el("div","r",on?"BOOKED":"NOT YET"));b.onclick=()=>{S.t[who][leg]=on?0:1;act(`${pname(who)}’s ${leg} ticket marked ${on?"NOT YET":"BOOKED"}`);save();renderAll()};c.appendChild(b)});box.appendChild(c)});$("tc").textContent=`${y} of ${all} booked`}
+
+/* rules */
+function renderRules(){const ul=$("rl");ul.innerHTML="";S.rules.forEach((r,i)=>{const li=el("li"),s=el("span","",r);s.contentEditable="true";s.onblur=()=>{const v=s.textContent.trim();if(v!==S.rules[i]){S.rules[i]=v;act("Edited a rule");save()}};const x=mk("button","x",ic("x",14));x.setAttribute("aria-label","Delete rule");x.onclick=()=>{act("Deleted a rule");S.rules.splice(i,1);save();renderAll()};li.append(s,x);ul.appendChild(li)})}
+$("ra").onclick=()=>{S.rules.push("New rule: select the text to edit it");act("Added a rule");save();renderAll()};
+
+/* chat */
+const shown=new Set();
+function who(){document.querySelectorAll("#who button").forEach(b=>{b.classList.toggle("on",b.dataset.w===me);b.textContent=pname(b.dataset.w)})}
+document.querySelectorAll("#who button").forEach(b=>b.onclick=()=>setMe(b.dataset.w));
+["Just saved today","Found a deal","Check the tickets","Call tonight?"].forEach(t=>{const b=el("button","cp",t);b.onclick=()=>{$("msg").value=t;send()};$("qk").appendChild(b)});
+function renderChat(){const box=$("msgs");if(!msgs.length&&!box.children.length)box.appendChild(el("p","hint","No messages yet. Pick who you are and say hello."));
+ msgs.forEach(m=>{const k=m.ts+m.who+m.text;if(shown.has(k))return;shown.add(k);const e=box.querySelector("p.hint");if(e)e.remove();
+  const r=el("div","mr"+(m.who===me?" me":"")),a=avatar(m.who,30),b=el("div","bb",m.text);if(m.who!==me)b.style.background=`color-mix(in srgb,${pcol(m.who)} 16%,var(--card))`;b.appendChild(el("small","",pname(m.who)+" · "+new Date(m.ts).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})));r.append(a,b);box.appendChild(r);box.scrollTop=box.scrollHeight});who()}
+function send(){const t=$("msg").value.trim();if(!t)return;if(!me){$("who").animate([{transform:"translateX(-6px)"},{transform:"translateX(6px)"},{transform:"none"}],{duration:250,iterations:2});return}
+ if(!col){status("Chat needs the shared connection","bad");return}$("msg").value="";col.add({who:me,text:t,ts:Date.now()}).catch(()=>status("Message not sent","bad"))}
+$("send").onclick=send;$("msg").onkeydown=e=>{if(e.key==="Enter")send()};
+function dotCheck(){const l=msgs[msgs.length-1];let seen=0;try{seen=+localStorage.getItem(K+"seen")||0}catch(e){}document.querySelector('nav a[data-p="chat"]').classList.toggle("dot",!!l&&page!=="chat"&&l.who!==me&&l.ts>seen)}
+
+function renderAll(){theme();renderHdr();renderHome();renderFeeds();renderMoney();renderAct();renderPlaces();renderTickets();renderRules();renderProfile();dotCheck()}
+(async function init(){
+ try{const l=localStorage.getItem(K);if(l){S=Object.assign(clone(DEF),JSON.parse(l));lastJSON=l}}catch(e){}
+ route();status("Connecting…");
+ let db=null;try{db=window.claude&&claude.use?await claude.use("db"):null}catch(e){}
+ try{AS=window.claude&&claude.use?await claude.use("assets"):null}catch(e){AS=null}
+ DB=db;
+ try{const U=window.claude&&claude.use?await claude.use("user"):null;if(U&&U.id)UID=await U.id()}catch(e){}
+ if(DB&&UID){try{const s=await DB.collection("data/users/"+UID).doc("me").get(),d=s.exists?s.data():null;if(d&&d.who&&S.prof[d.who]){me=d.who;try{localStorage.setItem(K+"me",me)}catch(e){}}}catch(e){}}
+ renderAll();askWho();
+ if(!db){status("Not shared: saved on this device only","bad");return}
+ ref=db.doc("trip/main");col=db.collection("chat");
+ const t=setTimeout(()=>status("No connection to the shared copy","bad"),10000);
+ ref.onSnapshot(s=>{clearTimeout(t);const d=s.exists?s.data():null;
+  if(d&&d.s&&d.s!==lastJSON&&!(document.activeElement&&document.activeElement.isContentEditable)){try{S=Object.assign(clone(DEF),JSON.parse(d.s));lastJSON=d.s;renderAll()}catch(e){}}
+  status(s.metadata&&s.metadata.hasPendingWrites?"Saving…":"Saved and shared","ok")},()=>status("Sync error. Changes may not be shared","bad"));
+ db.doc("news/feed").onSnapshot(s=>{const d=s.exists?s.data():null;if(d&&d.j){try{NEWS=JSON.parse(d.j);renderFeeds()}catch(e){}}},()=>{});
+ col.orderBy("ts","desc").limit(100).onSnapshot(s=>{msgs=s.docs.map(d=>d.data()).reverse();renderChat();renderHome();dotCheck()},()=>{});
+})();
+</script>
+</body>
+</html>
